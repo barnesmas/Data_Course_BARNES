@@ -1,0 +1,30 @@
+echo 'export GIT_PASSWORD="ghp_barnm5bs"' >> ~/.bashrc
+    
+    echo 'export GIT_USERNAME="YOUR_GITHUB_USERNAME"' >> ~/.bashrc
+    
+    exec bash
+    
+
+    echo $GIT_PASSWORD
+
+echo "This README file contains information about my uploaded assignments" >> README.md
+git add README.md
+git commit -m "1st commit"
+git push
+
+ git config --global user.email "you@example.com"
+ git config --global user.name "Your Name"
+
+git config --global user.email "barnesmas@gmail.com"
+git config --global user.name "barnesmas"
+
+token
+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 
+
+
+
+
+
+
+
+barnm5bsu
