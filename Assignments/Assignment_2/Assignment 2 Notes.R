@@ -140,7 +140,8 @@ for( i in 1:length(csv_files)){
   print(readLines(con = csv_files[i],n = 1))
 }
 
-
+getwd()
+list.files(full.names = F)
 
 
 
