@@ -1,0 +1,31 @@
+1. Create a plaintext document named “final_project_idea.txt”
+
+2. In it, describe your idea for a data analysis final project
+
+My idea is to explore data about dinosaur fossils in North America. I want to know more about how fossil measurements are correlated with species, and generate questions about variation within species.
+
+ A very basic example would be to look at the kind of variation we find in femur and tibia length  in different North American Therapod Dinosaurs. 
+
+3. Also, Describe the sort of data you will use, potential sources, and what the data might look like.
+
+I was able to download a load of data from a public database online called "The Paleobiology Database" https://data.world/bryon/paleobiodb. However, even selecting fossils from the 230 to 65 million year range, there is a limited number of specimens recorded in the database:
+
+Out of about 10,000 rows of fossil data I retrieved, only  897 were dinosaur fossils, and of these 897, 103 genera and 153 species, were represented. This means an average of about 9 measurements per genus, and some of these multiple measurements were made on the same individual specimans. 
+
+Turns out this lack of specimens is normal in the field of paleontology, so I might have to be satisfied with a smaller sample, which will limit the questions I can ask, and the differences I can see. However, I am hoping I can obtain more paleontlogical data, than what I've found so far. I will try to get a hold of the biology professor you mentioned, Paul Bybee, to see if he can help. 
+
+The data I have retreived so far contains around 100 columns such as:
+
+Taxonomy: class: phylum,  family, genus, species.
+Measurement
+Specimen part and number
+species diet
+location found: Country, State, coordinates, etc.
+age of fossil: 
+
+
+(If you already have data, skip this task) Create fake data that simulates what your final project data set might look like. Preferrably a csv file
+
+5. Generate a plot (using ggplot) using either your real or fake data that shows at least one expected result
+
+	I created a plot of histogramss called 'leg_bone.png' It should be in my github repository inside assignment 4
