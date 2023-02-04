@@ -28,4 +28,4 @@ age of fossil:
 
 5. Generate a plot (using ggplot) using either your real or fake data that shows at least one expected result
 
-	I created a plot of histogramss called 'leg_bone.png' It should be in my github repository inside assignment 4
+	I created a plot of histogramss called 'leg_bone.png' it's stored along with the data and r code in the Assignment 4 folder.
