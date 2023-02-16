@@ -1,6 +1,7 @@
 ## fossil data
 
 library(tidyverse)
+l
 
 df <- read_csv('./Project/fossil_north_america.csv', skip = 18)  # removes info rows
 names(df) <- df[1,] # assigns column names as first column
@@ -30,8 +31,8 @@ dinosaur <-
   dinosaur %>% 
 mutate(family = ifelse(genus == 'Allosaurus', 'Allosaurid',family))  # putting the allosaurus  speciesinto Allosaurid family
 
-filter(dinosaur, family == "NO_FAMILY_SPECIFIED")$genus %>% unique()http://127.0.0.1:29127/graphics/plot_zoom_png?width=1504&height=932
-dinosaur$identified_
+filter(dinosaur, family == "NO_FAMILY_SPECIFIED")$genus %>% unique()
+dinosaur$identified_name
 
 
 unique(dinosaur$family)
@@ -55,7 +56,10 @@ filter(dinosaur, specimen_part %in% c('femur', 'tibia'),
 
 ggsave('leg_bone.png',path = './Assignments/Assignment_4/',width = 10, height = 5)
 
-  
+
+dinosaur$lng
+
+?ggma
   
 
 
