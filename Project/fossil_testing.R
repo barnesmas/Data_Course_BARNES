@@ -1,7 +1,7 @@
 ## fossil data
 
 library(tidyverse)
-l
+
 
 df <- read_csv('./Project/fossil_north_america.csv', skip = 18)  # removes info rows
 names(df) <- df[1,] # assigns column names as first column
@@ -37,6 +37,7 @@ dinosaur$identified_name
 
 unique(dinosaur$family)
 
+p <- 
 filter(dinosaur, specimen_part %in% c('femur', 'tibia'), 
        measurement_type == 'length', 
        family %in% c('Tyrannosauridae','Allosaurid', "Coelophysidae", "Dromaeosauridae"  )) %>% 
@@ -54,12 +55,14 @@ filter(dinosaur, specimen_part %in% c('femur', 'tibia'),
         legend.position = 'none',
         axis.title = element_text(size = 16)) 
 
+
+
+glm(p)
 ggsave('leg_bone.png',path = './Assignments/Assignment_4/',width = 10, height = 5)
 
 
 dinosaur$lng
 
-?ggma
   
 
-
+dinosaur$family %>% unique()

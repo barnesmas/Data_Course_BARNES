@@ -37,15 +37,17 @@ select(dinosaur, identified_name) %>% unique()
 
 
 map %>% ggmap() +
-  geom_point(data = dinosaur, aes(x = lng, y = lat, color = family, size = 40, shape = )) +
+  geom_point(data = dinosaur, aes(x = lng, y = lat, color = family, size = 1000, shape = )) +
   geom_image(data = dinosaur[!is.na(dinosaur$image),], aes(image = image, x = lng, y = lat), size = .25)  +
   ggtitle(label = 'DINOSAUR FOSSIL LOCATOR', subtitle = 'Where Can I find a TREX?') + 
   xlab('LONGITUDE') +
   ylab('LATITUDE') +
-  theme(axis.title.x = element_text(angle = 90,
+  theme(title = element_text(color = 'grey'),
+        axis.title.x = element_text(angle = 90,
                                    hjust = 1,
                                    vjust = .5,
                                    face = 'italic'),
+
         axis.text.y = element_text(size = 40,
                                    angle = 220,
                                    face = 'bold',
@@ -53,8 +55,8 @@ map %>% ggmap() +
         axis.text.x= element_text(size = 40,
                                    angle = 100,
                                    face = 'bold',
-                                   color = 'green'),
-        plot.background = element_rect(fill = 'Maroon',
+                                   color = 'pink'),
+        plot.background = element_rect(fill = 'green',
                                        color = 'cyan',
                                        linewidth = 15),
         panel.grid.major.x = element_line(color = 'cyan',
@@ -62,5 +64,6 @@ map %>% ggmap() +
                                           lineend = 'round',
                                           linewidth = 6),
         strip.background = element_rect(fill = 'red', color = 'brown'),
-        legend.background = element_rect(fill = 'brown', linewidth = 40, color = 'orange'))
+        legend.background = element_rect(fill = 'brown', linewidth = 40, color = 'orange'),
+        legend.text = element_text(color = 'magenta', angle = 120))
 ggsave('ugly_dino_map.png', height = 8, width = 10)
