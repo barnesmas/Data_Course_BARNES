@@ -2,10 +2,10 @@ library(tidyverse)
 library(janitor)
 library(easystats)
 library(readxl)
-library(MASS)
+#library(MASS)
 
 df <- read_csv('./unicef-u5mr.csv') %>%  janitor::clean_names()
-view(df)
+#view(df)
 
 # to clean this data we are going to want to have the columns, country name, year, death rate, continent, and region
 # we are going to need to pivot longer to accomplish this.
@@ -20,6 +20,8 @@ df %>% pivot_longer(cols = -c(country_name, continent, region), names_to = 'year
          country = factor(country_name),
          continent = factor(continent), 
          region = factor(region)) %>% select(continent, region, country, year, rate)
+
+df_clean <- filter(df_clean, !is.na(rate))
 
 
 # plotting 
@@ -145,4 +147,40 @@ predict(mod3, newdata = data.frame(continent = 'Americas', region = 'South Ameri
 
 
 
+# trying new models
+
+# trying a general additive model
+library(mgcv)
+mod4 <- gam(data = df_clean, formula = rate ~ country  + s(year) )
+    
+
+summary(mod4)
+
+compare_performance(mod1, mod2, mod3, mod4)
+
+df_modeled <- 
+  df_clean %>% filter(!is.na(rate)) %>% 
+  mutate(fit1 = predict(mod1, newdata = df_clean[]), 
+         fit2 = predict(mod2, newdata = df_clean[]), 
+         fit3 = predict(mod3, newdata = df_clean[]), 
+         fit4 = predict(mod4, newdata = df_clean[]),
+         actual = rate) %>% 
+  select(continent, region, country, year, actual, fit1, fit2, fit3, fit4) %>% 
+  pivot_longer(cols = c(fit1, fit2, fit3, fit4), names_to = "model", values_to = "fitted") %>% 
+  mutate(model = as.factor(model))
+
+p6 <- 
+  df_modeled %>% 
+  ggplot(aes(color = continent)) +
+  facet_wrap(~model) +
+  # geom_point(aes(x = year, y = actual), alpha = .3) + #), color = 'black') +
+  geom_point(aes(x = year, y = fitted), size = 1.5) +
+  theme_bw()
+
+
+ggsave('Barnes_Plot_4.png', plot = p6)
+
+predict(mod4, newdata = data.frame(continent = 'Americas', region = 'South America', country = 'Ecuador', year = 2020))
+
+# model 4 didn't do much better than the other models for prediction ecuador
        
