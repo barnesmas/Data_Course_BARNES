@@ -1,0 +1,104 @@
+---
+title: "Assignment 9"
+author: "Mason Barnes"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+1. Push a completed version of your Rproj and R-markdown file (details at end of this assignment) to GitHub
+
+2. Your score will also depend on your analyses and presentation of your final report
+Your tasks:
+
+Loading packages:
+
+```{r}
+library(tidyverse)
+library(modelr)
+library(easystats)
+library(GGally)
+library(skimr)
+library(gridExtra)
+```
+
+
+Loading in the dataset “/Data/GradSchool_Admissions.csv”
+
+```{r}
+df <- read_csv('../../Data/GradSchool_Admissions.csv')  %>% mutate(admit = as.logical(admit), rank = factor(rank, levels = c(1,2,3,4)))
+
+glimpse(df)
+```
+
+
+<!-- You will explore and model the predictors of graduate school admission the “admit” column is coded as 1=success and 0=failure (that’s binary, so model appropriately) the other columns are the GRE score, the GPA, and the rank of the undergraduate institution, where I is “top-tier.” -->
+## Exploring the Data
+Looking for possible correlates
+```{r}
+df %>% ggpairs()
+```
+
+None of the variables seem to have an easy to see relationship with the 'admit' variable but even a slight visual difference could indicate a significant relationship, so we are going to test models with all three variables. 
+
+## Modeling the Data
+
+```{r}
+mod1 <- df %>% glm(formula = admit~ gre + gpa + rank, family = 'binomial')
+mod2 <- df %>% glm(formula = admit ~ ., family = 'binomial')
+mod3 <- df %>% glm(formula = admit ~ gre * gpa + rank, family = 'binomial' )
+mod4 <- df %>% glm(formula = admit ~ gre  + rank * gpa, family = 'binomial')
+mod5 <- df %>% glm(formula = admit ~ gre * rank + gpa, family = 'binomial')
+
+step <- MASS::stepAIC(mod2,trace=0) # trace=0 suppresses lengthy output to console
+mod6 <- glm(data = df,
+            formula=step$formula,, family = 'binomial')
+```
+
+### Comparing the models
+```{r} 
+comp <- compare_performance(mod1,mod2,mod3,mod4, mod5, mod6, rank = TRUE) 
+comp
+comp %>% plot()
+ 
+```
+mod3 has the best all around performance score.
+## Here's a summary of model 3.
+```{r}
+summary(mod3)
+```
+
+## Visualizing the Data
+
+```{r}
+p1 <- gather_predictions(mod3, data = df, type = 'response') %>% 
+  ggplot(aes(x = gre, y = pred, color = rank))+
+  geom_smooth() +
+  geom_point()
+
+p2 <- gather_predictions(mod3, data = df, type = 'response') %>% 
+  ggplot(aes(x = gpa, y = pred, color = rank))+
+  geom_smooth() +
+  geom_point()
+
+grid.arrange(p1, p2, ncol=2)
+
+```
+
+# Conclusion
+
+Our best model predicts with  increase in gre, gpa, or rank the probability of being admitted to grad school increases. 
+
+
+
+
+
+<!--
+Document your data explorations, figures, and conclusions in a reproducible R-markdown report
+That means I want to see, in your html report, your process of model evaluation and selection. Here’s an example
+Upload your self-contained R project, including knitted HTML report, to GitHub in your Assignment_9 directory
+--> 
+
